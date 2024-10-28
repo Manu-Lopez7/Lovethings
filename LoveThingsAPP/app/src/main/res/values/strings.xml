@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">LoveThings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="login">Login</string>
+    <string name="register">Registro</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">Olvidaste tu contraseña?</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="sign_up">Registrate!</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="already_have_account">Ya tienes una cuenta?</string>
+    <string name="birthdate">Fecha de nacimiento</string>
+    <string name="errorform">Has cometido errores en el formulario de registro, por favor revisa las entradas</string>
+</resources>
