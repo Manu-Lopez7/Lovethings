@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#C3CA22" />
+    <corners android:radius="18dp" /> <!-- Ajusta según el tamaño del botón central -->
+</shape>

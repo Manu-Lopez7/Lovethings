@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:background="@drawable/bg_gradient_main">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/bebas_neue"
+        android:text="@string/app_name"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="430dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/bg_gradient_inv">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Username"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/register_username"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="Username"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3A3939"
+            android:textSize="15dp"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Email"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/register_email"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="Email"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3A3939"
+            android:textSize="15dp"
+            android:layout_marginTop="130dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="190dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Password"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/register_password"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="Password"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#050505"
+            android:textSize="15dp"
+            android:layout_marginTop="220dp"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="280dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Confirm Password"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/register_confirm_password"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:hint="Confirm Password"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#050505"
+            android:textSize="15dp"
+            android:layout_marginTop="310dp"
+            android:inputType="textPassword" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/register_error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF1100"
+        android:textSize="12dp"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="650dp" />
+
+    <Button
+        android:id="@+id/register_btn"
+        android:layout_width="310dp"
+        android:layout_height="37dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Register"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/bebas_neue"
+        android:textSize="18dp"
+        app:backgroundTint="#000000"
+        android:layout_marginTop="680dp" />
+
+
+
+</FrameLayout>
