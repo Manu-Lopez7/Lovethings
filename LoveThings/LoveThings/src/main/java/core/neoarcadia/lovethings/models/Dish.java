@@ -1,5 +1,6 @@
 package core.neoarcadia.lovethings.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import core.neoarcadia.lovethings.models.User;
 
@@ -22,9 +23,10 @@ public class Dish {
     private Integer rating;
 
     private String notes;
-
+    //jason back indica que es hijo
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonBackReference
     private Restaurant restaurant;
 
     @ManyToOne

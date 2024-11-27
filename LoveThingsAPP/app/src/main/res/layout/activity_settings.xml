@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_app"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#393A21"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="LoveThings"
+        app:titleTextColor="#FFFFFF">
+
+        <ImageButton
+            android:id="@+id/btnsettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Settings"
+            android:src="@drawable/ic_home_black_24dp"
+            app:tint="#FFFFFF" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/navigationbar"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="5dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+
+        >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btncs"
+            android:text="Cerrar sesion"
+            android:padding="8dp"
+            android:layout_marginBottom="-9dp"
+            style="?attr/materialButtonOutlinedStyle"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/black"
+            android:textColor="@color/black"
+            android:gravity="left"
+
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnar"
+            android:text="Añadir restaurante"
+            android:padding="8dp"
+            android:layout_marginBottom="-9dp"
+            style="?attr/materialButtonOutlinedStyle"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/black"
+            android:textColor="@color/black"
+            android:gravity="left"
+
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnsg"
+            android:text="Seguridad"
+            android:padding="8dp"
+            android:layout_marginBottom="-9dp"
+            style="?attr/materialButtonOutlinedStyle"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/black"
+            android:textColor="@color/black"
+            android:gravity="left"
+
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnlopd"
+            android:text="Politica de privacidad"
+            android:padding="8dp"
+            android:layout_marginBottom="-9dp"
+            style="?attr/materialButtonOutlinedStyle"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/black"
+            android:textColor="@color/black"
+            android:gravity="left"
+
+            />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#393A21"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_nav_menu" />
+
+
+    <ImageButton
+        android:id="@+id/btnhome"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignTop="@id/navigationbar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_button_bg"
+        android:contentDescription="Love"
+        android:elevation="8dp"
+        android:src="@drawable/ic_home_black_24dp"
+        app:tint="#FFEB3B" />
+
+</RelativeLayout>

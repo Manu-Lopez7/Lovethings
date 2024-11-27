@@ -113,7 +113,7 @@ public class DishController {
 
     // Obtener platos usuario
     @GetMapping("/user-feed")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getUserDishes(Principal principal) {
         String username = principal.getName();
         User user = userRepository.findByUsername(username)

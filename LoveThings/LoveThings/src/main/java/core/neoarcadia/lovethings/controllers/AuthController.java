@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import ch.qos.logback.classic.Logger;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,9 @@ public class AuthController {
 
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+    String jwt = jwtUtils.generateTokenFromUsername(userDetails.getUsername());
+    System.out.println("JWT Generado: " + jwt);
+
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
     List<String> roles = userDetails.getAuthorities().stream()
@@ -73,7 +77,7 @@ public class AuthController {
         .body(new UserInfoResponse(userDetails.getId(),
                                    userDetails.getUsername(),
                                    userDetails.getEmail(),
-                                   roles));
+                                   roles,jwt));
   }
 
   @PostMapping("/signup")
@@ -86,7 +90,6 @@ public class AuthController {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
 
-    // Create new user's account
     User user = new User(signUpRequest.getUsername(),
                          signUpRequest.getEmail(),
                          encoder.encode(signUpRequest.getPassword()));

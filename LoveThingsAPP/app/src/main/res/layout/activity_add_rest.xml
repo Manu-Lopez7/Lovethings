@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_app"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#393A21"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="LoveThings"
+        app:titleTextColor="#FFFFFF">
+
+        <ImageButton
+            android:id="@+id/btnsettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Settings"
+            android:src="@drawable/ic_home_black_24dp"
+            app:tint="#FFFFFF" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="56dp"
+
+        android:fillViewport="true"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btnimg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_weight="4"
+            />
+
+
+        <EditText
+            android:id="@+id/restname"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Name" />
+
+        <EditText
+            android:id="@+id/restaddr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Adress" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnadd"
+            android:text="Añadir"
+            android:padding="8dp"
+            android:layout_marginBottom="9dp"
+            android:backgroundTint="#6F7527"
+            />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#393A21"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_nav_menu" />
+
+
+    <ImageButton
+        android:id="@+id/btnhome"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignTop="@id/navigationbar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_button_bg"
+        android:contentDescription="Love"
+        android:elevation="8dp"
+        android:src="@drawable/ic_home_black_24dp"
+        app:tint="#FFEB3B" />
+
+</RelativeLayout>

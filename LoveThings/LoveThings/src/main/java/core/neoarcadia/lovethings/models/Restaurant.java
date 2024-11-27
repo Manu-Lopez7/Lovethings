@@ -1,5 +1,6 @@
 package core.neoarcadia.lovethings.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,12 +18,13 @@ public class Restaurant {
     private String address;
 
     private String imagePath;
-
+    // y este indica que es padre
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Dish> dishes = new HashSet<>();
 
 
-
+// tengo que añadir horario
 
     public Long getId() {
         return id;

@@ -28,32 +28,42 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
+    String headerAuth = request.getHeader("Authorization");
+
+    // Registrar la cabecera Authorization
+    if (headerAuth != null) {
+      logger.debug("Authorization Header: " + headerAuth);
+    } else {
+      logger.debug("Authorization Header: NONE");
+    }
+
     try {
       String jwt = parseJwt(request);
       if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
         String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        
-        UsernamePasswordAuthenticationToken authentication = 
-            new UsernamePasswordAuthenticationToken(userDetails,
-                                                    null,
-                                                    userDetails.getAuthorities());
-        
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception e) {
-      logger.error("Cannot set user authentication: {}", e);
+      logger.error("Cannot set user authentication: {}", e.getMessage());
     }
 
     filterChain.doFilter(request, response);
   }
-
   private String parseJwt(HttpServletRequest request) {
-    String jwt = jwtUtils.getJwtFromCookies(request);
-    return jwt;
+    String headerAuth = request.getHeader("Authorization");
+
+    if (headerAuth != null && headerAuth.startsWith("Bearer ")) {
+      return headerAuth.substring(7);
+    }
+
+    return null;
   }
+
 }

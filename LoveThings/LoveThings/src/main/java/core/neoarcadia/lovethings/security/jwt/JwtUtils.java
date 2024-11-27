@@ -52,6 +52,7 @@ public class JwtUtils {
   }
 
   public String getUserNameFromJwtToken(String token) {
+    logger.debug("Extracting username from JWT");
     return Jwts.parserBuilder().setSigningKey(key()).build()
         .parseClaimsJws(token).getBody().getSubject();
   }
@@ -63,6 +64,7 @@ public class JwtUtils {
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
+      logger.debug("JWT is valid");
       return true;
     } catch (MalformedJwtException e) {
       logger.error("Invalid JWT token: {}", e.getMessage());
@@ -72,6 +74,8 @@ public class JwtUtils {
       logger.error("JWT token is unsupported: {}", e.getMessage());
     } catch (IllegalArgumentException e) {
       logger.error("JWT claims string is empty: {}", e.getMessage());
+    } catch (Exception e) {
+      logger.error("JWT token is invalid: {}", e.getMessage());
     }
 
     return false;
