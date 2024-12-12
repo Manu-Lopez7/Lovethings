@@ -16,7 +16,11 @@ import java.io.IOException;
 public class ApiClient {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/";
+    //private static final String BASE_URL = "http://10.0.2.2:8080/api/";
+    private static final String BASE_URL = "http://192.168.18.10:8080/api/";
+    //private static final String BASE_URL = "http://192.168.192.10:8080/api/";
+
+
 
     public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {

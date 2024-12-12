@@ -23,83 +23,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginRight="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Settings"
+            android:layout_marginRight="10dp"
             android:src="@drawable/menu"
             app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
 
-
-    <LinearLayout
+    <fragment
+        android:id="@+id/mapfr"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/navigationbar"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navigationbar"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="5dp"
-        android:fillViewport="true"
-        android:orientation="vertical"
-
-        >
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btncs"
-            android:text="Cerrar sesion"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnar"
-            android:text="Añadir restaurante"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnsg"
-            android:text="Cambiar Contraseña"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-
-    </LinearLayout>
+      />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
         android:background="#393A21"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_menu" />
-
 
     <ImageButton
         android:id="@+id/btnpost"
@@ -109,7 +58,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/circle_button_bg"
         android:contentDescription="Love"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:src="@drawable/lightning"
         app:tint="#FFEB3B" />
 

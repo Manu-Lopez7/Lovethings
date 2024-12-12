@@ -1,6 +1,7 @@
 package neoarcadia.core.lovethings.api;
 
 import java.util.List;
+import java.util.Map;
 
 import neoarcadia.core.lovethings.login.LoginRequest;
 import neoarcadia.core.lovethings.login.LoginResponse;
@@ -13,8 +14,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("/api/auth/signin")
@@ -25,15 +30,33 @@ public interface ApiService {
     @POST("/api/dishes/add")
     Call<Void> addDish(
             @Part("name") RequestBody name,
-            @Part("notes") RequestBody notes,
             @Part("price") RequestBody price,
-            @Part("rating") RequestBody rating,
             @Part("waitTime") RequestBody waitTime,
+            @Part("rating") RequestBody rating,
+            @Part("notes") RequestBody notes,
             @Part("restaurantId") RequestBody restaurantId,
             @Part MultipartBody.Part image
     );
-    @GET("/api/restaurants")
+    @GET("/api/restaurants/getall")
     Call<List<Restaurant>> getAllRestaurants();
+    @GET("/api/restaurants/user")
+    Call<List<Restaurant>> getRestaurantsByUser();
+    @POST("/api/auth/change-password")
+    Call<MessageResponse> changePassword(@Body Map<String, String> changePasswordRequest);
+    @Multipart
+    @POST("restaurants/add")
+    Call<Void> addRestaurant(
+            @Part("name") RequestBody name,
+            @Part("address") RequestBody address,
+            @Part("category") RequestBody category,
+            @Part("phoneNumber") RequestBody phoneNumber,
+            @Part("menuLink") RequestBody menuLink,
+            @Part("hours") RequestBody hours,
+            @Part MultipartBody.Part image
+    );
+    @PATCH("/api/dishes/favorite/{id}")
+    Call<Void> updateFavoriteStatus(@Path("id") Long id, @Query("isFavorite") boolean isFavorite);
+
 
 
 }

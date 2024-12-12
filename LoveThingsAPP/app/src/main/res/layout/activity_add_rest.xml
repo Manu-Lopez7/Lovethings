@@ -22,10 +22,11 @@
             android:id="@+id/btnsettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_gravity="end"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Settings"
-            android:src="@drawable/ic_home_black_24dp"
+            android:src="@drawable/menu"
             app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -64,10 +65,40 @@
             android:id="@+id/restaddr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
             android:text="Adress" />
+        <EditText
+            android:id="@+id/restcat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Categoria" />
+        <EditText
+            android:id="@+id/restnum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de teléfono"
+            android:inputType="phone"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/restlink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enlace de la carta"
+            android:inputType="textUri"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/resttime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Horario (Ej: 9:00-22:00)"
+            android:inputType="text"
+            android:padding="10dp" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +125,7 @@
 
 
     <ImageButton
-        android:id="@+id/btnhome"
+        android:id="@+id/btnpost"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignTop="@id/navigationbar"
@@ -102,7 +133,7 @@
         android:background="@drawable/circle_button_bg"
         android:contentDescription="Love"
         android:elevation="8dp"
-        android:src="@drawable/ic_home_black_24dp"
+        android:src="@drawable/lightning"
         app:tint="#FFEB3B" />
 
 </RelativeLayout>

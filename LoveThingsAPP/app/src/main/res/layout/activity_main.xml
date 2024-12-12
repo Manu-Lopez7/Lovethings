@@ -25,7 +25,8 @@
             android:layout_gravity="end"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Settings"
-            android:src="@drawable/ic_home_black_24dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/menu"
             app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -49,19 +50,20 @@
             tools:listitem="@layout/feed_cardview" />
     </ScrollView>
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
         android:background="#393A21"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_menu" />
 
-
     <ImageButton
-        android:id="@+id/btnhome"
+        android:id="@+id/btnpost"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignTop="@id/navigationbar"
@@ -69,7 +71,7 @@
         android:background="@drawable/circle_button_bg"
         android:contentDescription="Love"
         android:elevation="10dp"
-        android:src="@drawable/ic_home_black_24dp"
+        android:src="@drawable/lightning"
         app:tint="#FFEB3B" />
 
 </RelativeLayout>

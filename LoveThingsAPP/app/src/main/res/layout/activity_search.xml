@@ -23,83 +23,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginRight="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Settings"
+            android:layout_marginRight="10dp"
             android:src="@drawable/menu"
             app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/toolbar"
 
+    >
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/search_query"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigationbar"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="5dp"
-        android:fillViewport="true"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:hint="Buscar plato"
+        android:padding="10dp" />
 
-        >
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:padding="8dp"
+        android:layout_marginBottom="9dp"
+        android:backgroundTint="#6F7527"
+        />
+</LinearLayout>
 
-        <Button
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dishRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btncs"
-            android:text="Cerrar sesion"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            tools:listitem="@layout/dish_cardview" />
 
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnar"
-            android:text="Añadir restaurante"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnsg"
-            android:text="Cambiar Contraseña"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-
-    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
         android:background="#393A21"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_nav_menu" />
-
 
     <ImageButton
         android:id="@+id/btnpost"
@@ -109,7 +86,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/circle_button_bg"
         android:contentDescription="Love"
-        android:elevation="8dp"
+        android:elevation="10dp"
         android:src="@drawable/lightning"
         app:tint="#FFEB3B" />
 

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import ch.qos.logback.classic.Logger;
+import core.neoarcadia.lovethings.payload.request.ChangePasswordRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,4 +137,22 @@ public class AuthController {
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
         .body(new MessageResponse("You've been signed out!"));
   }
+  @PostMapping("/change-password")
+  public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String currentUsername = authentication.getName();
+
+    User user = userRepository.findByUsername(currentUsername)
+            .orElseThrow(() -> new RuntimeException("Error: User is not found."));
+
+    if (!encoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: Current password is incorrect!"));
+    }
+
+    user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+    userRepository.save(user);
+
+    return ResponseEntity.ok(new MessageResponse("Password changed successfully!"));
+  }
 }
+

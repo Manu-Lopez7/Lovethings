@@ -33,58 +33,44 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigationbar"
-        android:layout_below="@id/toolbar"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="56dp"
+
         android:fillViewport="true"
-        android:orientation="vertical"
+        android:orientation="vertical">
 
-        >
-
-        <Button
+        <EditText
+            android:id="@+id/oldpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btncs"
-            android:text="Cerrar sesion"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
-
-            />
-
-        <Button
+            android:hint="Contraseña anterior"
+            android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/newpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnar"
-            android:text="Añadir restaurante"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
+            android:hint="Nueva contraseña"
+            android:inputType="textPassword" />
 
-            />
-
-        <Button
+        <EditText
+            android:id="@+id/cnfpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnsg"
-            android:text="Cambiar Contraseña"
-            android:padding="8dp"
-            android:layout_marginBottom="-9dp"
-            style="?attr/materialButtonOutlinedStyle"
-            app:cornerRadius="0dp"
-            app:strokeColor="@color/black"
-            android:textColor="@color/black"
-            android:gravity="left"
+            android:hint="Confirmar nueva contraseña"
+            android:inputType="textPassword" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/cbtn"
+            android:text="Cambiar contraseña"
+            android:padding="8dp"
+            android:layout_marginBottom="9dp"
+            android:backgroundTint="#6F7527"
             />
 
 

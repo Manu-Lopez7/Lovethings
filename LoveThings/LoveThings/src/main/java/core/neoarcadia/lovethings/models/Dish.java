@@ -23,6 +23,7 @@ public class Dish {
     private Integer rating;
 
     private String notes;
+    private Boolean isFavorite = false;
     //jason back indica que es hijo
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -97,6 +98,13 @@ public class Dish {
         this.restaurant = restaurant;
     }
 
+    public Boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
     public User getUser() {
         return user;
     }

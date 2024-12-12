@@ -1,4 +1,4 @@
-package neoarcadia.core.lovethings;
+package neoarcadia.core.lovethings.singup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import neoarcadia.core.lovethings.login.LoginActivity;
+import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.api.ApiClient;
-import neoarcadia.core.lovethings.singup.SignupRequest;
-import neoarcadia.core.lovethings.singup.MessageResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
