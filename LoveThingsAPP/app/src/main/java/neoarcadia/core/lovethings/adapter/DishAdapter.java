@@ -1,5 +1,6 @@
 package neoarcadia.core.lovethings.adapter;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.models.Dish;
+import neoarcadia.core.lovethings.utils.CustomPicasso;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,12 +53,20 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         holder.price.setText(String.valueOf(dish.getPrice()));
         holder.rating.setText(String.valueOf(dish.getRating()));
         holder.waitTime.setText(String.valueOf(dish.getWaitTime()));
+        SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("jwt_token", null);
 
-        // Carga de la imagen con Picasso
-        if (dish.getImagePath() != null) {
-            Picasso.get().load(dish.getImagePath()).into(holder.dishimg);
+        String imageUrl = dish.getImagePath()
+                .replace("C:\\uploads", "http://192.168.18.10:8080/uploads")
+                .replace("\\", "/");
+        if (token != null) {
+            CustomPicasso.getInstance(context, token)
+                    .load(imageUrl)
+                    .into(holder.dishimg);
+            Log.d("DishAdapter", "Imagen cargada");
         } else {
-            holder.dishimg.setImageResource(R.drawable.ic_launcher_background); // Imagen por defecto
+            holder.dishimg.setImageResource(R.drawable.ic_launcher_foreground);
+            Log.d("DishAdapter", "Imagen no cargada");
         }
         holder.favButton.setImageResource(dish.isFavorite() ? R.drawable.like : R.drawable.dislike);
         holder.favButton.setOnClickListener(v -> {
