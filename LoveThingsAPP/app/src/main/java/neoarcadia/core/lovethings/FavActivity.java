@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -39,17 +40,23 @@ public class FavActivity extends AppCompatActivity {
     private Button searchButton;
     private ImageButton postBtn;
     private ImageButton settingsBtn;
+    private TextView infoUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_fav);
 
         dishRecyclerView = findViewById(R.id.dishRecyclerView);
         searchQuery = findViewById(R.id.search_query);
         searchButton = findViewById(R.id.search_button);
         postBtn = findViewById(R.id.btnpost);
         settingsBtn = findViewById(R.id.btnsettings);
+        infoUser = findViewById(R.id.infouser);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "Usuario");
+        infoUser.setText(username);
 
         dishRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         dishAdapter = new DishAdapter(filteredDishes, this);

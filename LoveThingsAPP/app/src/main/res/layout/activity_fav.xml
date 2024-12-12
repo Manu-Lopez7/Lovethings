@@ -33,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/toolbar"
-
+        android:layout_below="@id/info_layout"
+        android:id="@+id/search_layout"
         >
 
         <EditText
@@ -54,18 +54,51 @@
             android:layout_marginBottom="9dp"
             android:backgroundTint="#6F7527"
             />
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_below="@id/toolbar"
+        android:id="@+id/info_layout">
+
+        <TextView
+            android:id="@+id/infolayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favoritos"
+            android:textSize="20sp"
+            android:layout_gravity="left"
+            android:layout_weight="2"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            />
+        <TextView
+            android:id="@+id/infouser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="USER"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dishRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="150dp"
         android:layout_marginBottom="5dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         tools:listitem="@layout/dish_cardview" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationbar"

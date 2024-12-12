@@ -32,6 +32,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String roles = sharedPreferences.getString("roles", "");
+
 
         postBtn = findViewById(R.id.btnpost);
         settingsBtn = findViewById(R.id.btnsettings);
@@ -39,6 +42,9 @@ public class SettingsActivity extends AppCompatActivity {
         addRestaurantButton = findViewById(R.id.btnar);
         changePasswordButton = findViewById(R.id.btnsg);
         BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
+        if (!roles.contains("ROLE_ADMIN")) {
+            addRestaurantButton.setVisibility(View.GONE);
+        }
         navigationBar.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_home) {
