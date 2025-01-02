@@ -55,19 +55,28 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         holder.waitTime.setText(String.valueOf(dish.getWaitTime()));
         SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("jwt_token", null);
+        if (dish.getImagePath() != null && !dish.getImagePath().isEmpty()) {
+            Log.d("DishAdapter", "Imagen del plato: " + dish.getImagePath());
+            String imageUrl = dish.getImagePath()
+                    .replace("C:\\uploads", "http://192.168.18.10:8080/uploads")
+                    .replace("\\", "/");
+            if (token != null) {
+                CustomPicasso.getInstance(context, token)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.image_blank)
+                        .error(R.drawable.ic_dashboard_black_24dp)
+                        .into(holder.dishimg);
 
-        String imageUrl = dish.getImagePath()
-                .replace("C:\\uploads", "http://192.168.18.10:8080/uploads")
-                .replace("\\", "/");
-        if (token != null) {
-            CustomPicasso.getInstance(context, token)
-                    .load(imageUrl)
-                    .into(holder.dishimg);
-            Log.d("DishAdapter", "Imagen cargada");
+                Log.d("DishAdapter", "Imagen cargada");
+            } else {
+                holder.dishimg.setImageResource(R.drawable.image_blank);
+                Log.d("DishAdapter", "Imagen no cargada");
+            }
         } else {
-            holder.dishimg.setImageResource(R.drawable.ic_launcher_foreground);
-            Log.d("DishAdapter", "Imagen no cargada");
+            Log.d("DishAdapter", "La imagen es nula o vacía, se carga la imagen predeterminada");
+            holder.dishimg.setImageResource(R.drawable.home);
         }
+
         holder.favButton.setImageResource(dish.isFavorite() ? R.drawable.like : R.drawable.dislike);
         holder.favButton.setOnClickListener(v -> {
             boolean newFavoriteState = !dish.isFavorite();

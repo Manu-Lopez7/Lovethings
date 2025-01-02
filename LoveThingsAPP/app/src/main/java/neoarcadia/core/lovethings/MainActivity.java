@@ -21,6 +21,7 @@ import neoarcadia.core.lovethings.adapter.RestaurantAdapter;
 import neoarcadia.core.lovethings.add.AddDishActivity;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
+import neoarcadia.core.lovethings.login.LoginActivity;
 import neoarcadia.core.lovethings.models.Restaurant;
 import neoarcadia.core.lovethings.utils.SettingsActivity;
 import retrofit2.Call;
@@ -77,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, SettingsActivity.class));
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        String token = sharedPreferences.getString("jwt_token", null);
+
+        if (token != null) {
+            Log.d("MainActivity", "User logged in!");
+        } else {
+            Log.e("ApiClient", "User not logged in! Redirecting to login activity");
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
 
         loadRestaurants();

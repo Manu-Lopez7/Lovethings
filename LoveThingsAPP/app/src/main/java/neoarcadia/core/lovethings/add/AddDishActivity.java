@@ -154,6 +154,7 @@ public class AddDishActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Log.i("AddDishActivity", "Plato añadido con éxito");
+                    startActivity(new Intent(AddDishActivity.this, AddDishActivity.class));
                 } else {
                     Log.e("AddDishActivity", "Error al añadir plato: " + response.code());
                 }
