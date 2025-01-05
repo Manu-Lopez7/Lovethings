@@ -1,91 +1,61 @@
-package neoarcadia.core.lovethings;
+package neoarcadia.core.lovethings.frames;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.SharedPreferences;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.adapter.DishAdapter;
-import neoarcadia.core.lovethings.add.AddDishActivity;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.models.Dish;
 import neoarcadia.core.lovethings.models.Restaurant;
-import neoarcadia.core.lovethings.utils.SettingsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends Fragment {
     private RecyclerView dishRecyclerView;
     private DishAdapter dishAdapter;
-    private List<Dish> allDishes = new ArrayList<>();
     private List<Dish> filteredDishes = new ArrayList<>();
     private EditText searchQuery;
     private Button searchButton;
-    private ImageButton postBtn;
-    private ImageButton settingsBtn;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_search, container, false);
 
-        dishRecyclerView = findViewById(R.id.dishRecyclerView);
-        searchQuery = findViewById(R.id.search_query);
-        searchButton = findViewById(R.id.search_button);
-        postBtn = findViewById(R.id.btnpost);
-        settingsBtn = findViewById(R.id.btnsettings);
 
-        dishRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dishAdapter = new DishAdapter(filteredDishes, this);
+        dishRecyclerView = view.findViewById(R.id.dishRecyclerView);
+        searchQuery = view.findViewById(R.id.search_query);
+        searchButton = view.findViewById(R.id.search_button);
+
+
+        dishRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        dishAdapter = new DishAdapter(filteredDishes, requireContext());
         dishRecyclerView.setAdapter(dishAdapter);
 
-        BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
-        navigationBar.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.menu_home) {
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_search) {
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_post) {
-                startActivity(new Intent(this, AddDishActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_location) {
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_profile) {
-                startActivity(new Intent(this, FavActivity.class));
-                return true;
-            } else {
-                return false;
-            }
-        });
-
-        postBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, AddDishActivity.class));
-        });
-        settingsBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
         Log.d("SearchActivity", "RecyclerView tiene adaptador: " + (dishRecyclerView.getAdapter() != null));
 
         loadDishes();
@@ -96,16 +66,18 @@ public class SearchActivity extends AppCompatActivity {
                     .collect(Collectors.toList());
             dishAdapter.updateDishes(searchResults);
         });
-
+        return view;
     }
+
+
     private void loadDishes() {
-        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         Call<List<Restaurant>> call = apiService.getRestaurantsByUser();
         call.enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(@NonNull Call<List<Restaurant>> call, @NonNull Response<List<Restaurant>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
                     long userId = sharedPreferences.getLong("user_id", -1);
                     List<Dish> userDishes = new ArrayList<>();
                     Log.d("SearchActivity", "Datos recibidos de la API:");

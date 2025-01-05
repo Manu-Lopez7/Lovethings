@@ -5,63 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_app"
-    tools:context=".MainActivity">
+    tools:context=".frames.FeedActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#393A21"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="LoveThings"
-        app:titleTextColor="#FFFFFF">
-
-        <ImageButton
-            android:id="@+id/btnsettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
-            android:src="@drawable/menu"
-            app:tint="#FFFFFF" />
-    </androidx.appcompat.widget.Toolbar>
 
 
     <Spinner
         android:id="@+id/restaurants_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         android:layout_marginTop="8dp"
         android:padding="10dp"
         android:spinnerMode="dropdown" />
 
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:background="#393A21"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_nav_menu" />
-
-
     <LinearLayout
+        android:id="@+id/add_dish_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/restaurants_spinner"
         android:layout_marginStart="-2dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginBottom="119dp"
         android:background="@drawable/bg_gradient_feed"
         android:orientation="vertical"
         android:padding="8dp">
@@ -88,7 +50,7 @@
                 android:layout_height="150dp"
                 android:background="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/search" />
+                android:src="@drawable/add_img" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,9 +95,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="70dp"
+                android:hint="€"
                 android:inputType="number"
                 android:padding="8dp"
-                android:hint="€"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
 
@@ -144,9 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:hint="Nota"
                 android:inputType="number"
                 android:padding="8dp"
-                android:hint="Nota"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
 
@@ -156,25 +118,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="4dp"
+                android:hint="00:00"
                 android:inputType="time"
                 android:padding="8dp"
-                android:hint="00:00"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
+
         </LinearLayout>
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:layout_marginBottom="9dp"
+            android:backgroundTint="#6F7527"
+            android:padding="8dp"
+            android:text="Añadir"
+
+            />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btnpost"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignTop="@id/navigationbar"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_button_bg"
-        android:contentDescription="Love"
-        android:elevation="10dp"
-        android:src="@drawable/lightning"
-        app:tint="#FFEB3B" />
 
 
 </RelativeLayout>

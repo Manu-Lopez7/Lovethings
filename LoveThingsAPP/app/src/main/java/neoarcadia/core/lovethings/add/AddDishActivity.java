@@ -6,15 +6,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,12 +30,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import neoarcadia.core.lovethings.FavActivity;
-import neoarcadia.core.lovethings.MainActivity;
-import neoarcadia.core.lovethings.MapsActivity;
 import neoarcadia.core.lovethings.R;
-import neoarcadia.core.lovethings.SearchActivity;
-import neoarcadia.core.lovethings.utils.SettingsActivity;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.models.Restaurant;
@@ -40,63 +41,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddDishActivity extends AppCompatActivity {
+public class AddDishActivity extends Fragment {
     private Spinner restaurantSpinner;
     private EditText nameEditText, notesEditText, priceEditText, ratingEditText, waitTimeEditText;
-    private ImageButton imageButton, postBtn, settingsBtn;
+    private ImageButton imageButton;
     private Uri selectedImageUri;
+    private Button addDishButton;
     private static final int PICK_IMAGE_REQUEST = 1;
     private List<Restaurant> restaurantList = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_dish);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_add_dish, container, false);
 
-        restaurantSpinner = findViewById(R.id.restaurants_spinner);
-        nameEditText = findViewById(R.id.nameds);
-        notesEditText = findViewById(R.id.noteds);
-        priceEditText = findViewById(R.id.price);
-        ratingEditText = findViewById(R.id.ratingmed);
-        waitTimeEditText = findViewById(R.id.timewait);
-        imageButton = findViewById(R.id.dishimg);
-        postBtn = findViewById(R.id.btnpost);
-        settingsBtn = findViewById(R.id.btnsettings);
+        restaurantSpinner = view.findViewById(R.id.restaurants_spinner);
+        nameEditText = view.findViewById(R.id.nameds);
+        notesEditText = view.findViewById(R.id.noteds);
+        priceEditText = view.findViewById(R.id.price);
+        ratingEditText = view.findViewById(R.id.ratingmed);
+        waitTimeEditText = view.findViewById(R.id.timewait);
+        imageButton = view.findViewById(R.id.dishimg);
+        addDishButton = view.findViewById(R.id.add_button);
+
 
         loadRestaurants();
 
         imageButton.setOnClickListener(v -> openImageChooser());
 
-        postBtn.setOnClickListener(v -> sendDishToApi());
-
-        settingsBtn.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-
-        BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
-        navigationBar.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.menu_home) {
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_search) {
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_post) {
-                startActivity(new Intent(this, AddDishActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_location) {
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_profile) {
-                startActivity(new Intent(this, FavActivity.class));
-                return true;
-            } else {
-                return false;
-            }
-        });
+        addDishButton.setOnClickListener(v -> sendDishToApi());
+        return view;
     }
 
     private void loadRestaurants() {
-        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         Call<List<Restaurant>> call = apiService.getAllRestaurants();
         call.enqueue(new Callback<List<Restaurant>>() {
             @Override
@@ -107,7 +84,7 @@ public class AddDishActivity extends AppCompatActivity {
                     for (Restaurant restaurant : restaurantList) {
                         restaurantNames.add(restaurant.getName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(AddDishActivity.this, android.R.layout.simple_spinner_item, restaurantNames);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, restaurantNames);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     restaurantSpinner.setAdapter(adapter);
                 } else {
@@ -123,7 +100,7 @@ public class AddDishActivity extends AppCompatActivity {
     }
 
     private void sendDishToApi() {
-        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         int selectedRestaurantPosition = restaurantSpinner.getSelectedItemPosition();
         if (selectedRestaurantPosition == -1 || restaurantList.isEmpty()) {
             Log.e("AddDishActivity", "No se seleccionó un restaurante");
@@ -154,7 +131,7 @@ public class AddDishActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Log.i("AddDishActivity", "Plato añadido con éxito");
-                    startActivity(new Intent(AddDishActivity.this, AddDishActivity.class));
+                    startActivity(new Intent(requireContext(), AddDishActivity.class));
                 } else {
                     Log.e("AddDishActivity", "Error al añadir plato: " + response.code());
                 }
@@ -170,26 +147,27 @@ public class AddDishActivity extends AppCompatActivity {
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        imagePickerLauncher.launch(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                imageButton.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                Log.e("AddDishActivity", "Error al cargar la imagen", e);
+    private ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
+                    selectedImageUri = result.getData().getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                        imageButton.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        Log.e("AddDishActivity", "Error al cargar la imagen", e);
+                    }
+                }
             }
-        }
-    }
+    );
     private File getFileFromUri(Uri uri) throws IOException {
-        File tempFile = new File(getCacheDir(), "temp_image_" + System.currentTimeMillis() + ".jpg");
-        try (InputStream inputStream = getContentResolver().openInputStream(uri);
+        File tempFile = new File(requireContext().getCacheDir(), "temp_image_" + System.currentTimeMillis() + ".jpg");
+        try (InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
              OutputStream outputStream = new FileOutputStream(tempFile)) {
             byte[] buffer = new byte[1024];
             int bytesRead;

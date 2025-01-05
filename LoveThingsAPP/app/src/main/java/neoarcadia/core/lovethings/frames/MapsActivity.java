@@ -1,13 +1,15 @@
-package neoarcadia.core.lovethings;
+package neoarcadia.core.lovethings.frames;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,77 +17,39 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import neoarcadia.core.lovethings.add.AddDishActivity;
+import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.databinding.ActivityMapsBinding;
 import neoarcadia.core.lovethings.models.Dish;
 import neoarcadia.core.lovethings.models.Restaurant;
-import neoarcadia.core.lovethings.utils.SettingsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
-    private ImageButton postBtn;
-    private ImageButton settingsBtn;
+
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        postBtn = findViewById(R.id.btnpost);
-        settingsBtn = findViewById(R.id.btnsettings);
-        BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
-        navigationBar.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.menu_home) {
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_search) {
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_post) {
-                startActivity(new Intent(this, AddDishActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_location) {
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_profile) {
-                startActivity(new Intent(this, FavActivity.class));
-                return true;
-            } else {
-                return false;
-            }
-        });
-
-        postBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, AddDishActivity.class));
-        });
-        settingsBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_maps, container, false);
 
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.mapfr);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         } else {
             Log.e("MapsActivity", "No se pudo encontrar el fragmento del mapa");
         }
-
+    return view;
     }
 
 
@@ -93,8 +57,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
-        SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
         long userId = sharedPreferences.getLong("user_id", -1);
 
         Call<List<Restaurant>> call = apiService.getRestaurantsByUser();

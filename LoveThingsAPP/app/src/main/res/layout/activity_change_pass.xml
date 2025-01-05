@@ -5,39 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient_app"
-    tools:context=".MainActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#393A21"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="LoveThings"
-        app:titleTextColor="#FFFFFF">
-
-        <ImageButton
-            android:id="@+id/btnsettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
-            android:src="@drawable/menu"
-            app:tint="#FFFFFF" />
-    </androidx.appcompat.widget.Toolbar>
+    tools:context=".frames.FeedActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="56dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
 
         android:fillViewport="true"
         android:orientation="vertical">
@@ -48,6 +22,7 @@
             android:layout_height="wrap_content"
             android:hint="Contraseña anterior"
             android:inputType="textPassword" />
+
         <EditText
             android:id="@+id/newpass"
             android:layout_width="match_parent"
@@ -63,40 +38,18 @@
             android:inputType="textPassword" />
 
         <Button
+            android:id="@+id/cbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/cbtn"
-            android:text="Cambiar contraseña"
-            android:padding="8dp"
             android:layout_marginBottom="9dp"
             android:backgroundTint="#6F7527"
-            />
+            android:padding="8dp"
+            android:text="Cambiar contraseña" />
 
 
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:background="#393A21"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_nav_menu" />
 
-
-    <ImageButton
-        android:id="@+id/btnpost"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignTop="@id/navigationbar"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_button_bg"
-        android:contentDescription="Love"
-        android:elevation="8dp"
-        android:src="@drawable/lightning"
-        app:tint="#FFEB3B" />
 
 </RelativeLayout>

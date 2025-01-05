@@ -22,7 +22,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 
-import neoarcadia.core.lovethings.MainActivity;
+import neoarcadia.core.lovethings.MainFrameActivity;
+import neoarcadia.core.lovethings.frames.FeedActivity;
 import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.api.ApiClient;
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginActivity", "Roles Guardado: " + loginResponse.getRoles());
                     Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainFrameActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

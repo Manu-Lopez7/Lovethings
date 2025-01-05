@@ -1,30 +1,30 @@
 package neoarcadia.core.lovethings.add;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.IOException;
 
-import neoarcadia.core.lovethings.FavActivity;
-import neoarcadia.core.lovethings.MainActivity;
-import neoarcadia.core.lovethings.MapsActivity;
 import neoarcadia.core.lovethings.R;
-import neoarcadia.core.lovethings.SearchActivity;
-import neoarcadia.core.lovethings.utils.SettingsActivity;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.utils.FileUtils;
@@ -35,9 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddRestActivity extends AppCompatActivity {
-    private ImageButton postBtn;
-    private ImageButton settingsBtn;
+public class AddRestActivity extends Fragment {
+
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageButton restaurantImage;
@@ -47,82 +46,53 @@ public class AddRestActivity extends AppCompatActivity {
     private Button addBtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_rest);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_add_rest, container, false);
 
-        postBtn = findViewById(R.id.btnpost);
-        settingsBtn = findViewById(R.id.btnsettings);
-        restaurantImage = findViewById(R.id.btnimg);
-        restaurantName = findViewById(R.id.restname);
-        restaurantAddress = findViewById(R.id.restaddr);
-        restaurantCategory = findViewById(R.id.restcat);
-        restaurantPhone = findViewById(R.id.restnum);
-        restaurantMenuLink = findViewById(R.id.restlink);
-        restaurantHours = findViewById(R.id.resttime);
-        addBtn = findViewById(R.id.btnadd);
+        restaurantImage = view.findViewById(R.id.btnimg);
+        restaurantName = view.findViewById(R.id.restname);
+        restaurantAddress = view.findViewById(R.id.restaddr);
+        restaurantCategory = view.findViewById(R.id.restcat);
+        restaurantPhone = view.findViewById(R.id.restnum);
+        restaurantMenuLink = view.findViewById(R.id.restlink);
+        restaurantHours = view.findViewById(R.id.resttime);
+        addBtn = view.findViewById(R.id.btnadd);
 
         restaurantImage.setOnClickListener(v -> openImageChooser());
         addBtn.setOnClickListener(v -> {
             if (validateInputs()) {
                 uploadRestaurant();
             } else {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             }
         });
 
-        BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
-        navigationBar.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.menu_home) {
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_search) {
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_post) {
-                startActivity(new Intent(this, AddDishActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_location) {
-                startActivity(new Intent(this, MapsActivity.class));
-                return true;
-            } else if (itemId == R.id.menu_profile) {
-                startActivity(new Intent(this, FavActivity.class));
-                return true;
-            } else {
-                return false;
-            }
-        });
-
-        postBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, AddDishActivity.class));
-        });
-        settingsBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
+        return view;
     }
 
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        //startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        imagePickerLauncher.launch(intent);
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-                restaurantImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                Log.e("AddRestActivity", "Error al cargar la imagen", e);
+    private ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
+                    selectedImageUri = result.getData().getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                        restaurantImage.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        Log.e("AddRestActivity", "Error al cargar la imagen", e);
+                    }
+                }
             }
-        }
-    }
-
+    );
     private boolean validateInputs() {
         return !restaurantName.getText().toString().isEmpty()
                 && !restaurantAddress.getText().toString().isEmpty()
@@ -133,7 +103,7 @@ public class AddRestActivity extends AppCompatActivity {
     }
 
     private void uploadRestaurant() {
-        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
 
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), restaurantName.getText().toString());
         RequestBody address = RequestBody.create(MediaType.parse("text/plain"), restaurantAddress.getText().toString());
@@ -144,7 +114,7 @@ public class AddRestActivity extends AppCompatActivity {
 
         MultipartBody.Part imagePart = null;
         if (selectedImageUri != null) {
-            File file = new File(FileUtils.getPath(this, selectedImageUri));
+            File file = new File(FileUtils.getPath(requireContext(), selectedImageUri));
             RequestBody imageBody = RequestBody.create(MediaType.parse("image/*"), file);
             imagePart = MultipartBody.Part.createFormData("image", file.getName(), imageBody);
         }
@@ -154,16 +124,16 @@ public class AddRestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(AddRestActivity.this, "Restaurante añadido con éxito", Toast.LENGTH_SHORT).show();
-                    finish();
+                    Toast.makeText(requireContext(), "Restaurante añadido con éxito", Toast.LENGTH_SHORT).show();
+                    requireActivity().finish();
                 } else {
-                    Toast.makeText(AddRestActivity.this, "Error al añadir el restaurante", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Error al añadir el restaurante", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(AddRestActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("AddRestActivity", "Error al subir restaurante", t);
             }
         });

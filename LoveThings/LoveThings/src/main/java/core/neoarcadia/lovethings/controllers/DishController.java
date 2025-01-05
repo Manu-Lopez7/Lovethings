@@ -142,4 +142,30 @@ public class DishController {
         logger.info("Marking dish as favorite: id={}, isFavorite={}", id, isFavorite);
         return ResponseEntity.ok("Dish favorite status updated successfully!");
     }
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> deleteDish(@PathVariable Long id, Principal principal) {
+        try {
+            String username = principal.getName();
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            Dish dish = dishRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Dish not found"));
+
+            // Verificar que el usuario sea el propietario del plato
+            if (!dish.getUser().equals(user)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("You do not have permission to delete this dish.");
+            }
+
+            dishRepository.delete(dish);
+            logger.info("Dish deleted successfully: id={}, user={}", id, username);
+            return ResponseEntity.ok("Dish deleted successfully!");
+        } catch (Exception e) {
+            logger.error("Error deleting dish: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while trying to delete the dish.");
+        }
+    }
 }

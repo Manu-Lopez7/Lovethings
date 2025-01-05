@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_app"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,38 +20,15 @@
         app:title="LoveThings"
         app:titleTextColor="#FFFFFF">
 
-        <ImageButton
-            android:id="@+id/btnsettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/menu"
-            app:tint="#FFFFFF" />
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/navigationbar"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="-1dp"
-        android:layout_marginBottom="1dp"
-        android:fillViewport="true">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/feedRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            tools:listitem="@layout/feed_cardview" />
-    </ScrollView>
-
+        android:layout_below="@+id/toolbar"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationbar"
@@ -73,5 +52,12 @@
         android:elevation="10dp"
         android:src="@drawable/lightning"
         app:tint="#FFEB3B" />
-
 </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/drawer_header" />
+</androidx.drawerlayout.widget.DrawerLayout>
