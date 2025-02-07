@@ -82,7 +82,44 @@
 
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="30dp"
+            android:inputType="number"
+            android:padding="4dp"
+            android:text="Precio"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="29dp"
+            android:text="Nota del plato"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:inputType="time"
+            android:text="Minutos de espera"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +131,6 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginRight="70dp"
             android:inputType="number"
             android:padding="8dp"
@@ -106,7 +142,6 @@
             android:id="@+id/ratingmed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:inputType="number"
             android:padding="8dp"
             android:text="Nota"
@@ -118,11 +153,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
-            android:layout_marginTop="4dp"
             android:inputType="time"
             android:padding="8dp"
             android:text="00:00"
             android:textColor="#FFFFFF"
             android:textSize="25sp" />
     </LinearLayout>
+
 </LinearLayout>

@@ -2,6 +2,7 @@ package neoarcadia.core.lovethings.add;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,6 +35,7 @@ import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.models.Restaurant;
+import neoarcadia.core.lovethings.utils.ImageUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -157,10 +159,22 @@ public class AddDishActivity extends Fragment {
                 if (result.getResultCode() == AppCompatActivity.RESULT_OK && result.getData() != null) {
                     selectedImageUri = result.getData().getData();
                     try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                        // Redimensiona y comprime la imagen seleccionada
+                        File compressedImageFile = ImageUtils.resizeAndCompressImage(
+                                requireContext(),
+                                selectedImageUri,
+                                800, // Ancho máximo deseado
+                                80   // Calidad de compresión (0-100)
+                        );
+
+                        // Muestra la imagen comprimida en el botón
+                        Bitmap bitmap = BitmapFactory.decodeFile(compressedImageFile.getAbsolutePath());
                         imageButton.setImageBitmap(bitmap);
+                        // Actualiza el URI para el archivo comprimido
+                        selectedImageUri = Uri.fromFile(compressedImageFile);
+
                     } catch (IOException e) {
-                        Log.e("AddDishActivity", "Error al cargar la imagen", e);
+                        Log.e("AddRestActivity", "Error al procesar la imagen", e);
                     }
                 }
             }

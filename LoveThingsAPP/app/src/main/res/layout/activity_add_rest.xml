@@ -17,10 +17,11 @@
         <ImageButton
             android:id="@+id/btnimg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
+            android:padding="18dp"
             android:layout_gravity="center"
             android:src="@drawable/add_img"
-            android:layout_weight="4"
+
             />
 
 
@@ -28,10 +29,9 @@
             android:id="@+id/restname"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="Name" />
+            android:hint="Name" />
 
         <EditText
             android:id="@+id/restaddr"
@@ -39,14 +39,14 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="Adress" />
+            android:hint="Adress" />
         <EditText
             android:id="@+id/restcat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="Categoria" />
+            android:hint="Categoria" />
         <EditText
             android:id="@+id/restnum"
             android:layout_width="match_parent"
