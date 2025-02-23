@@ -40,6 +40,9 @@ public interface ApiService {
     );
     @GET("/api/restaurants/getall")
     Call<List<Restaurant>> getAllRestaurants();
+    @GET("/api/restaurants/{id}")
+    Call<Restaurant> getRestaurantById(@Path("id") Long id);
+
     @GET("/api/restaurants/user")
     Call<List<Restaurant>> getRestaurantsByUser();
     @POST("/api/auth/change-password")
