@@ -105,6 +105,9 @@ public class Dish {
     public void setIsFavorite(Boolean isFavorite) {
         this.isFavorite = isFavorite;
     }
+    public Long getRestaurantId() {
+        return restaurant != null ? restaurant.getId() : null;
+    }
     public User getUser() {
         return user;
     }
@@ -112,4 +115,6 @@ public class Dish {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

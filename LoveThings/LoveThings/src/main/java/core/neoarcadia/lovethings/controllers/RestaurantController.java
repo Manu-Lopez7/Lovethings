@@ -21,6 +21,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -102,6 +103,19 @@ public class RestaurantController {
                     .body("Error fetching restaurants for user.");
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getRestaurantById(@PathVariable Long id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+
+        if (restaurant.isPresent()) {
+            return ResponseEntity.ok(restaurant.get());
+        } else {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Restaurant not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
+
     @GetMapping("/getall")
     public ResponseEntity<?> getAllRestaurants() {
         logger.info("Charging all restaurants");
@@ -149,4 +163,5 @@ public class RestaurantController {
 
         throw new RuntimeException("Error obtaining coordinates from Google API.");
     }
+
 }
