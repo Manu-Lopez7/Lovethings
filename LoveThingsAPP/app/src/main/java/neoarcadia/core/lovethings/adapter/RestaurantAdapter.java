@@ -48,7 +48,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         Log.d("RestaurantAdapter", "Carando imagen: " + restaurant.getImagePath());
         String imageUrl = restaurant.getImagePath()
-                .replace("C:\\uploads", "http://192.168.18.10:8080/uploads")
+                .replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
                 .replace("\\", "/");
         Log.d("RestaurantAdapter", "URL de la imagen: " + imageUrl);
 

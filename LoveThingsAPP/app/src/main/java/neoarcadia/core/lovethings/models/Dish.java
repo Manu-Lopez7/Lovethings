@@ -11,12 +11,12 @@ public class Dish {
     private int rating = 0;
     private String notes;
     private User user;
-    private String restaurantId;
+    private Long restaurantId;
     private boolean isFavorite;
     public Dish() {
     }
 
-    public Dish(Long id ,String name, double price, int waitTime, int rating, String notes, String imagePath, User user, String restaurantId, boolean isFavorite) {
+    public Dish(Long id ,String name, double price, int waitTime, int rating, String notes, String imagePath, User user, Long restaurantId, boolean isFavorite) {
         this.name = name;
         this.price = price;
         this.waitTime = waitTime;
@@ -103,11 +103,11 @@ public class Dish {
         this.user = user;
     }
 
-    public String getRestaurantId() {
+    public Long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
 }

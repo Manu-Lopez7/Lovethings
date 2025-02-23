@@ -23,6 +23,7 @@ import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
 import neoarcadia.core.lovethings.models.Dish;
+import neoarcadia.core.lovethings.models.Restaurant;
 import neoarcadia.core.lovethings.utils.CustomPicasso;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,9 +48,13 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Dish dish = dishList.get(holder.getAdapterPosition()); // Usa `holder.getAdapterPosition()` directamente
-        Log.d("DishAdapter", "Enlazando plato: " + dish.getName());
+        Dish dish = dishList.get(holder.getAdapterPosition()); // `holder.getAdapterPosition()`
 
+        if (dish.getRestaurantId() != null) {
+            fetchRestaurantName(dish.getRestaurantId(), holder.namerest);
+        } else {
+            Log.e("DishAdapter", "restaurantId es nulo o vacío para el plato: " + dish.getName());
+        }
         holder.title.setText(dish.getName());
         holder.description.setText(dish.getNotes());
         holder.price.setText(String.valueOf(dish.getPrice()));
@@ -66,7 +71,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         if (dish.getImagePath() != null && !dish.getImagePath().isEmpty()) {
             Log.d("DishAdapter", "Imagen del plato: " + dish.getImagePath());
             String imageUrl = dish.getImagePath()
-                    .replace("C:\\uploads", "http://192.168.18.10:8080/uploads")
+                    .replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
                     .replace("\\", "/");
             if (token != null) {
                 CustomPicasso.getInstance(context, token)
@@ -176,12 +181,13 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, description, price, rating, waitTime;
+        TextView namerest, title, description, price, rating, waitTime;
         ImageView dishimg;
         ImageButton favButton, deleteButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            namerest = itemView.findViewById(R.id.restaurantdish);
             title = itemView.findViewById(R.id.nameds);
             description = itemView.findViewById(R.id.noteds);
             price = itemView.findViewById(R.id.price);
@@ -191,6 +197,32 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
             favButton = itemView.findViewById(R.id.favds);
             deleteButton = itemView.findViewById(R.id.delds);
         }
+
+    }
+
+    private void fetchRestaurantName(Long restaurantId, TextView restaurantNameTextView) {
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
+        Call<Restaurant> call = apiService.getRestaurantById(restaurantId);
+
+        call.enqueue(new Callback<Restaurant>() {
+            @Override
+            public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String restaurantName = response.body().getName();
+                    Log.d("DishAdapter", "Nombre del restaurante obtenido: " + restaurantName);
+                    restaurantNameTextView.setText(restaurantName);
+                } else {
+                    Log.e("DishAdapter", "Error al obtener el restaurante: " + response.code());
+                    restaurantNameTextView.setText("Restaurante desconocido");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Restaurant> call, Throwable t) {
+                Log.e("DishAdapter", "Error en la API: " + t.getMessage());
+                restaurantNameTextView.setText("Error al cargar");
+            }
+        });
     }
 
 }

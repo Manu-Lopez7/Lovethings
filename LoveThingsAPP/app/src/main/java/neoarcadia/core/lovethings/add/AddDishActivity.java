@@ -34,6 +34,7 @@ import java.util.List;
 import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
+import neoarcadia.core.lovethings.frames.FeedActivity;
 import neoarcadia.core.lovethings.models.Restaurant;
 import neoarcadia.core.lovethings.utils.ImageUtils;
 import okhttp3.MediaType;
@@ -101,6 +102,7 @@ public class AddDishActivity extends Fragment {
         });
     }
 
+
     private void sendDishToApi() {
         ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         int selectedRestaurantPosition = restaurantSpinner.getSelectedItemPosition();
@@ -133,8 +135,11 @@ public class AddDishActivity extends Fragment {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Log.i("AddDishActivity", "Plato añadido con éxito");
-                    startActivity(new Intent(requireContext(), AddDishActivity.class));
-                } else {
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame_container, new FeedActivity())
+                            .addToBackStack(null)
+                            .commit();                } else {
                     Log.e("AddDishActivity", "Error al añadir plato: " + response.code());
                 }
             }

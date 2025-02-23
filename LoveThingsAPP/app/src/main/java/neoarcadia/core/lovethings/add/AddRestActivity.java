@@ -28,6 +28,7 @@ import java.io.IOException;
 import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
+import neoarcadia.core.lovethings.frames.FeedActivity;
 import neoarcadia.core.lovethings.utils.FileUtils;
 import neoarcadia.core.lovethings.utils.ImageUtils;
 import okhttp3.MediaType;
@@ -109,6 +110,14 @@ public class AddRestActivity extends Fragment {
             }
     );
     private boolean validateInputs() {
+        Log.e("AddRestActivity", "Validando inputs");
+        Log.e("AddRestActivity", "Restaurant Name: " + restaurantName.getText().toString());
+        Log.e("AddRestActivity", "Restaurant Address: " + restaurantAddress.getText().toString());
+        Log.e("AddRestActivity", "Restaurant Category: " + restaurantCategory.getText().toString());
+        Log.e("AddRestActivity", "Restaurant Phone: " + restaurantPhone.getText().toString());
+        Log.e("AddRestActivity", "Restaurant Menu Link: " + restaurantMenuLink.getText().toString());
+        Log.e("AddRestActivity", "Restaurant Hours: " + restaurantHours.getText().toString());
+
         return !restaurantName.getText().toString().isEmpty()
                 && !restaurantAddress.getText().toString().isEmpty()
                 && !restaurantCategory.getText().toString().isEmpty()
@@ -140,7 +149,11 @@ public class AddRestActivity extends Fragment {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(requireContext(), "Restaurante añadido con éxito", Toast.LENGTH_SHORT).show();
-                    requireActivity().finish();
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame_container, new FeedActivity())
+                            .addToBackStack(null)
+                            .commit();
                 } else {
                     Toast.makeText(requireContext(), "Error al añadir el restaurante", Toast.LENGTH_SHORT).show();
                 }

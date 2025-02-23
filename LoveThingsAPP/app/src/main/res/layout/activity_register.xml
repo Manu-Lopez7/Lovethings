@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".singup.RegisterActivity"
     android:background="@drawable/bg_gradient_main">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +37,9 @@
             android:id="@+id/register_username"
             android:layout_width="280dp"
             android:layout_height="50dp"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:inputType="text"
             android:layout_gravity="center_horizontal"
             android:hint="Username"
             android:textColor="#FFFFFF"
@@ -62,6 +64,9 @@
             android:layout_gravity="center_horizontal"
             android:hint="Email"
             android:textColor="#FFFFFF"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:inputType="text"
             android:backgroundTint="#3A3939"
             android:textSize="15dp"
             android:layout_marginTop="130dp" />
@@ -86,7 +91,10 @@
             android:backgroundTint="#050505"
             android:textSize="15dp"
             android:layout_marginTop="220dp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+             />
 
         <TextView
             android:layout_width="wrap_content"
@@ -108,6 +116,8 @@
             android:backgroundTint="#050505"
             android:textSize="15dp"
             android:layout_marginTop="310dp"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:inputType="textPassword" />
 
     </FrameLayout>
