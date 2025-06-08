@@ -2,6 +2,7 @@ package core.neoarcadia.lovethings.security;
 
 import core.neoarcadia.lovethings.security.jwt.AuthEntryPointJwt;
 import core.neoarcadia.lovethings.security.jwt.AuthTokenFilter;
+import core.neoarcadia.lovethings.security.jwt.JwtUtils;
 import core.neoarcadia.lovethings.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,11 +29,14 @@ public class WebSecurityConfig {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
     }
 
     @Bean
@@ -63,6 +67,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
+                                .requestMatchers("/api/admin/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

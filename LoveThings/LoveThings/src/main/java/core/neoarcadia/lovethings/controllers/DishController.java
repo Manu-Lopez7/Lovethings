@@ -44,8 +44,8 @@ public class DishController {
             @RequestParam("name") String name,
             @RequestParam("price") Double price,
             @RequestParam(value = "waitTime",required = false) String notes,
-            @RequestParam("rating") Integer rating,
-            @RequestParam("notes") Integer waitTime,
+            @RequestParam("rating") Double rating,
+            @RequestParam("notes") Double waitTime,
             @RequestParam("restaurantId") Long restaurantId,
             @RequestParam(value = "image", required = false) MultipartFile image,
             Principal principal) {
@@ -101,14 +101,17 @@ public class DishController {
 
     // Modificar un plato por rol
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> updateDish(
             @PathVariable Long id,
             @RequestParam("name") String name,
             @RequestParam("price") Double price,
-            @RequestParam("notes") Integer waitTime,
-            @RequestParam("rating") Integer rating,
-            @RequestParam("waitTime") String notes) {
+            @RequestParam("notes") Double waitTime,
+            @RequestParam("rating") Double rating,
+            @RequestParam("waitTime") String notes,
+            @RequestParam(value = "image", required = false) MultipartFile image
+
+    ){
 
         Dish dish = dishRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dish not found"));
@@ -118,10 +121,20 @@ public class DishController {
         dish.setWaitTime(waitTime);
         dish.setRating(rating);
         dish.setNotes(notes);
+        if (image != null && !image.isEmpty()) {
+            try {
+                String imagePath = saveImage(image, IMAGE_DIRECTORY);
+                dish.setImagePath(imagePath);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error saving dish image.");
+            }
+        }
 
         dishRepository.save(dish);
         return ResponseEntity.ok("Dish updated successfully!");
     }
+
 
     // Obtener platos usuario
     @GetMapping("/user-feed")

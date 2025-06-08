@@ -163,5 +163,61 @@ public class RestaurantController {
 
         throw new RuntimeException("Error obtaining coordinates from Google API.");
     }
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateRestaurant(
+            @PathVariable Long id,
+            @RequestParam("name") String name,
+            @RequestParam("address") String address,
+            @RequestParam("category") String category,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("menuLink") String menuLink,
+            @RequestParam("hours") String hours,
+            @RequestParam(value = "latitude", required = false) Double latitude,
+            @RequestParam(value = "longitude", required = false) Double longitude,
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+
+        restaurant.setName(name);
+        restaurant.setAddress(address);
+        restaurant.setCategory(category);
+        restaurant.setPhoneNumber(phoneNumber);
+        restaurant.setMenuLink(menuLink);
+        restaurant.setHours(hours);
+
+        if (latitude != null && longitude != null) {
+            restaurant.setLatitude(latitude);
+            restaurant.setLongitude(longitude);
+        } else {
+            try {
+                Map<String, Double> coordinates = getCoordinatesFromAddress(address);
+                restaurant.setLatitude(coordinates.get("latitude"));
+                restaurant.setLongitude(coordinates.get("longitude"));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid address provided.");
+            }
+        }
+
+        // Manejar la imagen nueva si llega
+        if (image != null && !image.isEmpty()) {
+            try {
+                String imageDirectory = "C:\\uploads\\restaurants\\";
+                Files.createDirectories(Paths.get(imageDirectory));
+                byte[] bytes = image.getBytes();
+                Path path = Paths.get(imageDirectory + image.getOriginalFilename());
+                Files.write(path, bytes);
+                restaurant.setImagePath(path.toString());
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error saving restaurant image.");
+            }
+        }
+
+        restaurantRepository.save(restaurant);
+        return ResponseEntity.ok("Restaurant updated successfully!");
+    }
+
 
 }

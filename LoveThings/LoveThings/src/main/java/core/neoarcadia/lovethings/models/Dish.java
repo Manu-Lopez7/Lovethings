@@ -18,9 +18,9 @@ public class Dish {
 
     private Double price;
 
-    private Integer waitTime;
+    private Double waitTime;
 
-    private Integer rating;
+    private Double rating;
 
     private String notes;
     private Boolean isFavorite = false;
@@ -66,19 +66,19 @@ public class Dish {
         this.price = price;
     }
 
-    public Integer getWaitTime() {
+    public Double getWaitTime() {
         return waitTime;
     }
 
-    public void setWaitTime(Integer waitTime) {
+    public void setWaitTime(Double waitTime) {
         this.waitTime = waitTime;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
