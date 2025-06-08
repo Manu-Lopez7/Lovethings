@@ -2,13 +2,15 @@ package neoarcadia.core.lovethings.models;
 
 import android.net.Uri;
 
-public class Dish {
+import java.io.Serializable;
+
+public class Dish implements Serializable {
     private Long id;
     private String name;
     private String imagePath;
     private double price = 0.0;
-    private int waitTime = 0;
-    private int rating = 0;
+    private double waitTime = 0;
+    private double rating = 0;
     private String notes;
     private User user;
     private Long restaurantId;
@@ -16,7 +18,7 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(Long id ,String name, double price, int waitTime, int rating, String notes, String imagePath, User user, Long restaurantId, boolean isFavorite) {
+    public Dish(Long id ,String name, double price, double waitTime, double rating, String notes, String imagePath, User user, Long restaurantId, boolean isFavorite) {
         this.name = name;
         this.price = price;
         this.waitTime = waitTime;
@@ -70,7 +72,7 @@ public class Dish {
         this.price = price;
     }
 
-    public int getWaitTime() {
+    public double getWaitTime() {
         return waitTime;
     }
 
@@ -78,7 +80,7 @@ public class Dish {
         this.waitTime = waitTime;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 

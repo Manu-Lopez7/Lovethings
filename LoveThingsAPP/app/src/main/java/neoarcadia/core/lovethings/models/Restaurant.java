@@ -1,11 +1,12 @@
 package neoarcadia.core.lovethings.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
     private Long id;
     private String name;
     private String address;

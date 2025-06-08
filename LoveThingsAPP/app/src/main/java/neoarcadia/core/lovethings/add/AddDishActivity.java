@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddDishActivity extends Fragment {
-    private Spinner restaurantSpinner;
+    private AutoCompleteTextView restaurantSpinner;
     private EditText nameEditText, notesEditText, priceEditText, ratingEditText, waitTimeEditText;
     private ImageButton imageButton;
     private Uri selectedImageUri;
@@ -61,8 +62,8 @@ public class AddDishActivity extends Fragment {
         nameEditText = view.findViewById(R.id.nameds);
         notesEditText = view.findViewById(R.id.noteds);
         priceEditText = view.findViewById(R.id.price);
-        ratingEditText = view.findViewById(R.id.ratingmed);
-        waitTimeEditText = view.findViewById(R.id.timewait);
+        ratingEditText = view.findViewById(R.id.timewait);
+        waitTimeEditText = view.findViewById(R.id.ratingmed);
         imageButton = view.findViewById(R.id.dishimg);
         addDishButton = view.findViewById(R.id.add_button);
 
@@ -105,13 +106,25 @@ public class AddDishActivity extends Fragment {
 
     private void sendDishToApi() {
         ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
-        int selectedRestaurantPosition = restaurantSpinner.getSelectedItemPosition();
-        if (selectedRestaurantPosition == -1 || restaurantList.isEmpty()) {
+        String selectedName = restaurantSpinner.getText().toString().trim();
+        if (selectedName.isEmpty() || restaurantList.isEmpty()) {
             Log.e("AddDishActivity", "No se seleccionó un restaurante");
             return;
         }
 
-        Restaurant selectedRestaurant = restaurantList.get(selectedRestaurantPosition);
+        Restaurant selectedRestaurant = null;
+        for (Restaurant r : restaurantList) {
+            if (r.getName().equalsIgnoreCase(selectedName)) {
+                selectedRestaurant = r;
+                break;
+            }
+        }
+
+        if (selectedRestaurant == null) {
+            Log.e("AddDishActivity", "Restaurante no válido");
+            return;
+        }
+
         RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), nameEditText.getText().toString());
         RequestBody pricePart = RequestBody.create(MediaType.parse("text/plain"), priceEditText.getText().toString());
         RequestBody waitTimePart = RequestBody.create(MediaType.parse("text/plain"), waitTimeEditText.getText().toString());

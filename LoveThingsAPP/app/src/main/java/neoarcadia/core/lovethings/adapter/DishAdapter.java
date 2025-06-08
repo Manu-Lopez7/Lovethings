@@ -1,6 +1,7 @@
 package neoarcadia.core.lovethings.adapter;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -22,6 +24,7 @@ import java.util.List;
 import neoarcadia.core.lovethings.R;
 import neoarcadia.core.lovethings.api.ApiClient;
 import neoarcadia.core.lovethings.api.ApiService;
+import neoarcadia.core.lovethings.frames.ChangeDishFragment;
 import neoarcadia.core.lovethings.models.Dish;
 import neoarcadia.core.lovethings.models.Restaurant;
 import neoarcadia.core.lovethings.utils.CustomPicasso;
@@ -162,8 +165,30 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
                     .setNegativeButton("Cancelar", null)
                     .show();
         });
-
+        holder.editButton.setOnClickListener(v -> {
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition == RecyclerView.NO_POSITION) {
+                return; // Salir si la posición no es válida
+            }
+            Dish currentDish = dishList.get(currentPosition);
+            Log.d("DishAdapter", "Intentando editar plato: ID=" + currentDish.getId());
+            Bundle args = new Bundle();
+            args.putSerializable("dish", currentDish);
+            ChangeDishFragment fragment = new ChangeDishFragment();
+            fragment.setArguments(args);
+            if (context instanceof AppCompatActivity) {
+                AppCompatActivity activity = (AppCompatActivity) context;
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                Log.e("DishAdapter", "Contexto no es una instancia de AppCompatActivity");
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -183,7 +208,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView namerest, title, description, price, rating, waitTime;
         ImageView dishimg;
-        ImageButton favButton, deleteButton;
+        ImageButton favButton, deleteButton, editButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -196,6 +221,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
             dishimg = itemView.findViewById(R.id.dishimg);
             favButton = itemView.findViewById(R.id.favds);
             deleteButton = itemView.findViewById(R.id.delds);
+            editButton = itemView.findViewById(R.id.editds);
         }
 
     }

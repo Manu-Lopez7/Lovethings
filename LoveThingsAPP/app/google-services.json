@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058652534333",
+    "project_id": "neo-arcadia-core",
+    "storage_bucket": "neo-arcadia-core.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058652534333:android:859fd049a57436235d5c54",
+        "android_client_info": {
+          "package_name": "neoarcadia.core.lovethings"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArDQTjWAttqJ1jQnx3uMOQXkMEtAcWx-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

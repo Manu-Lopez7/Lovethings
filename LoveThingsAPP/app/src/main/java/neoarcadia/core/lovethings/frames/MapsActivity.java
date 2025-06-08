@@ -33,14 +33,12 @@ import retrofit2.Response;
 
 public class MapsActivity extends Fragment implements OnMapReadyCallback {
 
-
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_maps, container, false);
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.mapfr);
@@ -75,7 +73,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                         if (!userDishes.isEmpty()) {
                             // Calcular nota media y platos pedidos
                             double averageRating = userDishes.stream()
-                                    .mapToInt(Dish::getRating)
+                                    .mapToDouble(Dish::getRating)
                                     .average()
                                     .orElse(0.0);
                             int dishesCount = userDishes.size();
