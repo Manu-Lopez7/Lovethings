@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -11,8 +13,8 @@ android {
         applicationId "neoarcadia.core.lovethings"
         minSdk 26
         targetSdk 33
-        versionCode 5
-        versionName "1.2.0-beta"
+        versionCode 7
+        versionName "1.9.0-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +52,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
     implementation 'org.mindrot:jbcrypt:0.4'
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation platform('com.google.firebase:firebase-bom:33.9.0')
 
 
 

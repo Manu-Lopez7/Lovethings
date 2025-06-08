@@ -2,6 +2,7 @@ package neoarcadia.core.lovethings.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import neoarcadia.core.lovethings.R;
+import neoarcadia.core.lovethings.frames.RestaurantFragment;
 import neoarcadia.core.lovethings.models.Dish;
 import neoarcadia.core.lovethings.models.Restaurant;
 import neoarcadia.core.lovethings.utils.CustomPicasso;
+import neoarcadia.core.lovethings.utils.ImageDialogFragment;
 
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
@@ -47,12 +51,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
 
         Log.d("RestaurantAdapter", "Carando imagen: " + restaurant.getImagePath());
-        String imageUrl = restaurant.getImagePath()
-                .replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
-                .replace("\\", "/");
+        String imageUrl = restaurant.getImagePath();
+
+        // Si es un enlace no realiza ninguna modificación
+        if (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://")) {
+            imageUrl = imageUrl.replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
+                    .replace("\\", "/");
+        }
         Log.d("RestaurantAdapter", "URL de la imagen: " + imageUrl);
 
-
+        final String finalImageUrl = imageUrl;
         if (token != null) {
             CustomPicasso.getInstance(context, token)
                     .load(imageUrl)
@@ -94,6 +102,37 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             holder.averageRating.setText("0");
             holder.averageWaitTime.setText("0");
         }
+        holder.itemView.setOnClickListener(v -> {
+            Log.d("RestaurantAdapter", "Clic en restaurante: " + restaurant.getName());
+            // Crear el fragmento y pasar el nombre del restaurante
+            RestaurantFragment restaurantFragment = new RestaurantFragment();
+            Bundle args = new Bundle();
+            args.putLong("restaurant_id", restaurant.getId());
+            args.putString("restaurant_name", restaurant.getName());
+            Log.d("RestaurantAdapter", "ID del restaurante: " + restaurant.getId());
+            restaurantFragment.setArguments(args);
+            // Lanzar el fragment
+            if (context instanceof AppCompatActivity) {
+                AppCompatActivity activity = (AppCompatActivity) context;
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_container, restaurantFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
+        });
+        holder.imageButton.setOnClickListener(v -> {
+            Log.d("RestaurantAdapter", "Clic en imagen para ampliación: " + restaurant.getName());
+
+            // Abre un DialogFragment para mostrar la imagen en grande
+            ImageDialogFragment imageDialog = new ImageDialogFragment();
+            Bundle args = new Bundle();
+            args.putString("image_url", finalImageUrl);
+            imageDialog.setArguments(args);
+            imageDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "image_dialog");
+        });
+
     }
 
     @Override

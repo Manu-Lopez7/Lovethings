@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,23 +14,28 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import neoarcadia.core.lovethings.add.AddDishActivity;
 import neoarcadia.core.lovethings.add.AddRestActivity;
+import neoarcadia.core.lovethings.frames.ChangeRestaurantFragment;
 import neoarcadia.core.lovethings.frames.FavActivity;
 import neoarcadia.core.lovethings.frames.FeedActivity;
 import neoarcadia.core.lovethings.frames.MapsActivity;
 import neoarcadia.core.lovethings.frames.SearchActivity;
 import neoarcadia.core.lovethings.login.LoginActivity;
 import neoarcadia.core.lovethings.utils.ChangePassActivity;
+import neoarcadia.core.lovethings.utils.GrantedRoles;
 
 public class MainFrameActivity extends AppCompatActivity {
     private ImageButton postBtn;
+    private FirebaseAnalytics mFirebaseAnalytics;
     private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_frame);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         BottomNavigationView navigationBar = findViewById(R.id.navigationbar);
@@ -50,6 +54,8 @@ public class MainFrameActivity extends AppCompatActivity {
 
         if (!roles.contains("ROLE_ADMIN")){
             navigationView.getMenu().findItem(R.id.add_restaurant).setVisible(false);
+            navigationView.getMenu().findItem(R.id.edit_restaurant).setVisible(false);
+            navigationView.getMenu().findItem(R.id.granted_roles).setVisible(false);
         }
 
         if (token != null) {
@@ -67,7 +73,11 @@ public class MainFrameActivity extends AppCompatActivity {
             int itemId = item.getItemId();
             if (itemId == R.id.add_restaurant) {
                 loadFragment(new AddRestActivity());
-            } else if (itemId == R.id.change_pass) {
+            } else if (itemId == R.id.edit_restaurant) {
+                loadFragment(new ChangeRestaurantFragment());
+            } else if (itemId == R.id.granted_roles) {
+                loadFragment(new GrantedRoles());
+            }  else if (itemId == R.id.change_pass) {
                 loadFragment(new ChangePassActivity());
             } else if (itemId == R.id.menu_signout) {
                 logout();

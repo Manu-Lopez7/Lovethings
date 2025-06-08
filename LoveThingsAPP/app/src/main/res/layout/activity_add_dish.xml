@@ -9,7 +9,7 @@
 
 
 
-    <Spinner
+    <AutoCompleteTextView
         android:id="@+id/restaurants_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,9 +102,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="29dp"
+                android:padding="4dp"
                 android:text="Nota del plato"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
@@ -113,8 +113,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:padding="4dp"
                 android:inputType="time"
+                android:padding="4dp"
                 android:text="Minutos de espera"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
@@ -133,7 +133,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="70dp"
                 android:hint="€"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
@@ -144,7 +144,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:hint="Nota"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
@@ -156,7 +157,7 @@
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="4dp"
                 android:hint="00:00"
-                android:inputType="time"
+                android:inputType="number"
                 android:padding="8dp"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
