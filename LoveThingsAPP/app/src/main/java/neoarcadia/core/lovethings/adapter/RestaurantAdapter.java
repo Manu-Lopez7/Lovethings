@@ -55,7 +55,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         // Si es un enlace no realiza ninguna modificación
         if (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://")) {
-            imageUrl = imageUrl.replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
+            imageUrl = imageUrl.replace("C:\\uploads", "http://172.22.239.37:20202/uploads")
                     .replace("\\", "/");
         }
         Log.d("RestaurantAdapter", "URL de la imagen: " + imageUrl);

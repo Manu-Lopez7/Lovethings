@@ -74,7 +74,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         if (dish.getImagePath() != null && !dish.getImagePath().isEmpty()) {
             Log.d("DishAdapter", "Imagen del plato: " + dish.getImagePath());
             String imageUrl = dish.getImagePath()
-                    .replace("C:\\uploads", "http://93.114.154.61:20202/uploads")
+                    .replace("C:\\uploads", "http://172.22.239.37:20202/uploads")
                     .replace("\\", "/");
             if (token != null) {
                 CustomPicasso.getInstance(context, token)

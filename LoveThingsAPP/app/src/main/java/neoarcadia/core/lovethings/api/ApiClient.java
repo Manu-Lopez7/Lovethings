@@ -18,7 +18,8 @@ public class ApiClient {
     private static Retrofit retrofit;
     //private static final String BASE_URL = "http://10.0.2.2:8080/api/";
     // private static final String BASE_URL = "http://192.168.18.10:8080/api/";
-    private static final String BASE_URL = "http://93.114.154.61:20202/api/";
+    //private static final String BASE_URL = "http://93.114.154.61:20202/api/";
+    private static final String BASE_URL = "http://172.22.239.37:20202/api/";
 
 
 
